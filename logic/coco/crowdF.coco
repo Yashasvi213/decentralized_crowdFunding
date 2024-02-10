@@ -1,0 +1,220 @@
+coco CrowdF
+
+state persistent:
+    // Token Variables
+    name String
+    symbol String
+    decimals U64
+    totalSupply U64
+    balanceOf Map[Address]U64
+    allowances Map[Address]Map[Address]U64
+    nextClaims Map[Address]I64
+    projects []Project
+
+
+class Project:
+    field projectId U64
+    field projectName String
+    field projectDescription String
+    field creator Address
+    field targetAmount U64
+    field currentAmount U64
+    field endTime U64
+    field funders Map[Address]U64
+
+//========================== Token Logic ====================//
+
+////////////////////////
+// Mutate Endpoints
+endpoint deployer Init!(name String,symbol String, decimals U64,totalSupply U64):
+    mutate name -> CrowdF.State.name
+    mutate symbol -> CrowdF.State.symbol
+    mutate decimals -> CrowdF.State.decimals
+
+    mint!(account: Address(Sender), value: totalSupply)
+    
+func transfer!(from Address, to Address, value U64):
+    if from == Address(0):
+        throw "Invalid Sender Address"
+    if to == Address(0):
+        throw "Invalid Recipient Address"
+    
+    mutate balanceOf <- CrowdF.State.balanceOf:
+        if balanceOf[from] < value:
+            throw "Insufficient Balance"
+        
+        balanceOf[from] -= value
+        balanceOf[to] += value
+
+
+func mint!(account Address, value U64):
+    if account == Address(0):
+        throw "Invalid Receiver Address"
+
+    mutate totalSupply <- CrowdF.State.totalSupply:
+        totalSupply += value
+
+    mutate balanceOf <- CrowdF.State.balanceOf:
+        balanceOf[account] += value
+
+
+func burn!(account Address, value U64):
+    if account == Address(0):
+        throw "Invalid Sender Address"
+
+    mutate totalSupply <- CrowdF.State.totalSupply:
+        totalSupply -= value
+
+    mutate balanceOf <- CrowdF.State.balanceOf:
+        balanceOf[account] -= value
+
+
+endpoint invokable Transfer!(to Address, value U64):
+    transfer!(from: Address(Sender), to, value)
+
+
+endpoint invokable Approve!(spender Address, value U64):
+    if spender == Address(0):
+        throw "Invalid Spender Address"
+
+    var owner = Address(Sender)
+
+    mutate allowances <- CrowdF.State.allowances:
+        allowances[owner][spender] = value
+
+
+endpoint invokable TransferFrom!(from Address, to Address, value U64):
+    var spender = Address(Sender)
+    
+    mutate allowances <- CrowdF.State.allowances:
+        if allowances[from][spender] < value:
+            throw "Insufficient allowances"
+
+        allowances[from][spender] -= value
+
+    transfer!(from, to, value)
+
+endpoint invokable Claim!(CLAIM_AMOUNT U64, CLAIM_INTERVAL U64 ):
+    var account = Address(Sender)
+    observe nextClaims <- CrowdF.State.nextClaims:
+        if nextClaims[account] > Env.Timestamp():
+            throw "Next Claim at {nextClaims[address]}"
+
+    mint!(account, value: CLAIM_AMOUNT)
+
+    mutate nextClaims <- CrowdF.State.nextClaims:
+        nextClaims[account] = Env.Timestamp() + CLAIM_INTERVAL
+
+
+////////////////////////
+// Observe/Read Endpoints
+///////////////////////
+
+endpoint invokable Name()->(name String):
+    observe name <- CrowdF.State.name
+
+endpoint invokable Symbol()->(symbol String):
+    observe symbol <- CrowdF.State.symbol
+
+endpoint invokable Decimals()->(decimals U64):
+    observe decimals <- CrowdF.State.decimals
+
+endpoint invokable TotalSupply()->(totalSupply U64):
+    observe totalSupply <- CrowdF.State.totalSupply
+
+endpoint invokable ClaimAmount()->(CLAIM_AMOUNT U64):
+    yield CLAIM_AMOUNT CLAIM_AMOUNT
+
+endpoint invokable ClaimInterval()->(claimInterval I64):
+    yield claimInterval CLAIM_INTERVAL
+
+endpoint invokable NextClaim(account Address)->(nextClaim I64):
+    observe nextClaims <- CrowdF.State.nextClaims:
+        yield nextClaim nextClaims[account]
+
+endpoint invokable BalanceOf(account Address)->(balance U64):
+    observe balanceOf <- CrowdF.State.balanceOf:
+        yield balance balanceOf[account]
+
+endpoint invokable Allowances(owner Address, spender Address)->(allowance U64):
+    observe allowances <- CrowdF.State.allowances:
+        yield allowance allowances[owner][spender]
+ 
+//========================== CrowdFunding Logic ====================//
+
+
+endpoint invokable CreateProject!(projectName String, projectDescription String, targetAmount U64)->(CreatedProject Project):
+    var newProject = Project{
+        projectName: projectName,
+        projectDescription: projectDescription,
+        targetAmount: targetAmount,
+        creator: Address(Sender)
+    }
+
+    mutate projects <- CrowdF.State.projects:
+        newProject.projectId = len(projects)
+        projects = append(project, newProject)
+        yield CreatedProject newProject 
+
+
+    // newProject.projectId = CrowdF.State.projects.length
+    // newProject.projectName = projectName
+    // newProject.projectDescription = projectDescription
+    // newProject.creator = Address(Sender)
+    // newProject.targetAmount = targetAmount
+    // newProject.currentAmount = 0
+    // newProject.endTime = Env.Timestamp() + durationInSeconds
+    // newProject.milestones = milestones
+    // // newProject.funders = Map<Address, U64>()
+    // newProject.refunded = false
+    // newProject.tokensLocked = false
+    // CrowdF.State.projects.append(newProject)
+    // yield CreatedProject newProject
+
+endpoint invokable FundProject!(projectId U64, amount U64):
+    var project Project
+
+    observe projects <- CrowdF.State.projects:
+        project = projects[projectId]
+
+    if Env.Timestamp() > project.endTime:
+        throw "Funding Ended"
+
+
+    project.currentAmount += amount 
+    mutate projects <- CrowdF.State.projects:
+        projects[projectId] = project
+
+    // Transfer from Address(Sender) to Address(CrowdF)
+    transfer!(from: Address(Sender), to: Address(CrowdF), value: amount)
+        
+endpoint invokable FinalizeProject!(projectId U64):
+     var project Project
+
+    observe projects <- CrowdF.State.projects:
+        project = projects[projectId]
+
+    if project.currentAmount < project.targetAmount:
+        throw "project failed"
+    
+    transfer!(from: Address(CrowdF), to: project.owner, value: project.currentAmount)
+
+
+
+endpoint invokable ClaimRefund!(projectId U64):
+    mutate projects <- CrowdF.State.projects:
+        var amountFunded = project.funders[Address(Sender)]
+        if amountFunded == 0:
+            throw "zero amount"
+        
+        transfer!(from: Address(CrowdF) , to:Address(Sender), value: amountFunded)
+        project.funders[Address(Sender)] = 0;
+
+
+//////////////////////// U6
+// Observe Endpoints
+///////////////////////
+
+endpoint invokable GetProjects()->(projects []Project):
+    observe projects <- CrowdF.State.projects
+    
