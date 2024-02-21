@@ -54,8 +54,8 @@ function Admin({ wallet, teas, Setteas }) {
     <div className=" w-[100vw] h-[80vh]">
       <div className="pl-10">
         <h1 className="text-[2.5em]">Create A Campaign</h1>
-
         <div className="flex flex-col items-center  gap-2 w-[95%] h-[90%] border-2 rounded-md p-4 mt-2">
+        <img className="md:hidden" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fENhbXBhaWdufGVufDB8fDB8fHww" alt="Create A Campaign"/>
           <input
             type="text"
             className="w-[50vw] border-3 rounded-md p-2"

@@ -56,6 +56,7 @@ const Navbar = ({
         }
       >
         <Link to={"/home"}>Home</Link>
+        <Link to={"/JoinCampaign"}>Campaigns</Link>
         <Link to={"/faucet"}>Claim Faucet</Link>
         <a
           href={"https://moi.technology"}

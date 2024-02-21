@@ -55,7 +55,16 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
   const navigate = useNavigate();
   return (
     <div className="w-[100vw] h-[80vh]">
-      <div className="pl-10">
+      {/* create campaign banner on top */}
+      <div className="bg-blue-500 px-4 py-2 my-4 text-white">
+        <p className="text-center text-xl mb-0 font-medium">
+          want to create your own campaign? 
+          <a href="/CreateCampaign" className="inline-block underline text-orange-500">
+            &nbsp;click here to get started!</a>
+        </p>
+      </div>
+
+      <div className="my-4 pl-10">
         <h1 className="text-[2.5em]">All Campaigns!</h1>
 
         {isLoading && (
@@ -69,7 +78,7 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
         )}
 
         {!isLoading && !error && (
-          <div className="flex  gap-2 flex-wrap">
+          <div className="flex  gap-4 flex-wrap justify-center mt-4">
             {campaigns.map((campaign) => (
               <ExploreCard key={campaign.id} {...campaign}>
                 <Button

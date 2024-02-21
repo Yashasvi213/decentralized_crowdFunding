@@ -15,7 +15,7 @@ function Hero() {
                 <div
                     className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:w-screen lg:items-center lg:px-8"
                 >
-                    <div className="max-w-xl text-justify ltr:sm:text-left rtl:sm:text-right">
+                    <div className="max-w-xl ltr:sm:text-left rtl:sm:text-right">
                         <h1 className="text-4xl font-extrabold text-white">
                             Let's Launch Your Dream.
 

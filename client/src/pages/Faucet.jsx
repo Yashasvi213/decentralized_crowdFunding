@@ -6,6 +6,7 @@ import { toastError, toastSuccess } from "../utils/toastWrapper";
 import Loader from "../components/Loader";
 import { calculateRemainingTime } from "../utils/CalculateTimer";
 import login from "../assets/login.jpg";
+import AboutFaucet from "../components/AboutFaucet";
 
 // Changes Made
 
@@ -68,6 +69,7 @@ const Faucet = ({
   };
 
   return wallet ? (
+  
     <div className="faucet">
       <Card classNames={"card"} type="primary" className=" ">
         <div className="">
@@ -133,8 +135,11 @@ const Faucet = ({
           </button>
         </div>
       </div>
+      <AboutFaucet/>
     </div>
-  );
+    );
+
+ 
 };
 
 export default Faucet;

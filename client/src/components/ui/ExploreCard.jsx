@@ -34,7 +34,8 @@ export default function ExploreCard({
         </div>
         <p class="mt-4 mb-2 text-lg text-gray-800 dark:text-white">{name}</p>
         <p class="text-sm font-normal text-gray-400">{description}</p>
-        <p>Target Amount: {targetAmount}</p>
+        {/* fixed texxt visibility issue */}
+        <p className="text-yellow-500">Target Amount: {targetAmount}</p>
         <div class="flex items-center justify-between p-2  bg-green-300 rounded">
           <div class="flex items-start justify-between w-full">
             <p class="flex-grow w-full text-2xl text-gray-700">
