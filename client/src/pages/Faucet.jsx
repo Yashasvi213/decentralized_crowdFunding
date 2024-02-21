@@ -1,116 +1,68 @@
 import { Card, Skeleton, message } from "antd";
 import { getLogicDriver } from "js-moi-sdk";
 import React, { useEffect, useRef, useState } from "react";
-import { logicId } from "../interface/logic";
+import logic, { logicId } from "../interface/logic";
+import { toastError, toastSuccess } from "../utils/toastWrapper";
+import Loader from "../components/Loader";
+import { calculateRemainingTime } from "../utils/CalculateTimer";
+import login from "../assets/login.jpg";
 
-const Faucet = ({ wallet, updateWallet, showConnectModal }) => {
+// Changes Made
+
+const Faucet = ({
+  wallet,
+  showConnectModal,
+  updateTokenBalance,
+  tokenDetails,
+  tokenBalance,
+}) => {
   const [isLoading, setLoading] = useState(false);
   const [isClaiming, setClaiming] = useState(false);
   const [refillTime, setRefillTime] = useState("00:00:00");
   const [error, setError] = useState("");
-  const [tokenName, setTokenName] = useState("");
   const [claimAmount, setClaimAmount] = useState();
   const [nextClaim, setNextClaim] = useState();
-  const [symbol, setSymbol] = useState();
-  const [decimals, setDecimals] = useState();
-  const logicRef = useRef(null);
 
   useEffect(() => {
-    console.log("wallet", wallet);
-    if (!wallet?.isInitialized()) {
-      return;
-    }
+    if (!wallet) return;
 
-    const initLogic = async () => {
+    const initDetails = async () => {
       setLoading(true);
-      const logic = await getLogicDriver(logicId, wallet);
-      logicRef.current = logic;
 
-      const [
-        { name },
-        { symbol },
-        { decimals },
-        { claimAmount },
-        { nextClaim },
-      ] = await Promise.all([
-        logic.routines.Name(),
-        logic.routines.Symbol(),
-        logic.routines.Decimals(),
-        logic.routines.ClaimAmount(wallet.getAddress()),
-        logic.routines.NextClaim(wallet.getAddress()),
+      const [{ claimAmount }, { nextClaim }] = await Promise.all([
+        logic.GetTokenClaimAmount(wallet.getAddress()),
+        logic.GetNextClaim(wallet.getAddress()),
       ]);
 
-      setTokenName(name);
-      setSymbol(symbol);
-      setDecimals(decimals);
       setClaimAmount(claimAmount);
       setNextClaim(nextClaim);
-
-      console.log({ name, symbol, decimals, claimAmount, nextClaim });
       setLoading(false);
     };
 
-    initLogic();
+    initDetails();
   }, [wallet]);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setRefillTime(calculateRemainingTime());
+      setRefillTime(calculateRemainingTime(nextClaim));
     }, 1000);
 
     return () => clearInterval(id);
-  }, [claimAmount]);
-
-  const calculateRemainingTime = () => {
-    // Get the current date and time in UTC
-    const now = new Date();
-
-    // Create a new Date object for 12:00 AM UTC
-    const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    tomorrow.setUTCHours(0, 0, 0, 0);
-
-    // Calculate the difference between now and 12:00 AM UTC
-    const diff = tomorrow.getTime() - now.getTime();
-
-    // Convert the difference to hours, minutes, and seconds
-    const hours = Math.floor(diff / (60 * 60 * 1000));
-    const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
-    const seconds = Math.floor((diff % (60 * 1000)) / 1000);
-
-    // Format the remaining time as a string in the "23:00:00" format
-    const remainingTime = `${String(hours).padStart(2, "0")}:${String(
-      minutes
-    ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-
-    return remainingTime;
-  };
+  }, [nextClaim]);
 
   const onClaimHandler = async () => {
     try {
-      if (logicRef.current == null) {
-        return;
-      }
       setClaiming(true);
 
-      const ix = await logicRef.current.routines.Claim();
-      await ix.wait();
-      setClaiming(false);
+      await logic.ClaimToken(wallet);
+      const { nextClaim } = await logic.GetNextClaim(wallet.getAddress());
 
-      const [{ claimAmount }, { nextClaim }] = await Promise.all([
-        logicRef.current.routines.ClaimAmount(wallet.getAddress()),
-        logicRef.current.routines.NextClaim(wallet.getAddress()),
-      ]);
-
-      setClaimAmount(claimAmount);
       setNextClaim(nextClaim);
-
-      console.log({ claimAmount, nextClaim });
-
-      message.success("Claimed successfully", 2);
+      updateTokenBalance(tokenBalance + claimAmount);
+      toastSuccess(`Claimed ${claimAmount} successfully`);
       setClaiming(false);
     } catch (error) {
-      console.error(error);
-      message.error("Failed to claim");
+      toastError(error.message);
       setClaiming(false);
     }
   };
@@ -126,16 +78,19 @@ const Faucet = ({ wallet, updateWallet, showConnectModal }) => {
                 <div className=""></div>
                 <div className="">
                   <div className="">Available Limit</div>
-                  <h1>
-                    {claimAmount} {tokenName}
-                  </h1>
+                  <h1>{refillTime === "00:00:00" ? claimAmount : 0} $</h1>
                 </div>
               </div>
               <div className="">
                 {" "}
                 {error && <p className="">{error}</p>}
-                <button className="btn btn--blue" onClick={onClaimHandler}>
-                  Claim Tokens
+                <button
+                  disabled={refillTime !== "00:00:00"}
+                  className="btn btn--blue"
+                  onClick={onClaimHandler}
+                >
+                  <span>Claim Tokens</span>
+                  <Loader loading={isClaiming} size={25} color="#fff" />
                 </button>
                 {isClaiming && (
                   <p className="">
@@ -153,12 +108,22 @@ const Faucet = ({ wallet, updateWallet, showConnectModal }) => {
     </div>
   ) : (
     <div className="connect-wallet">
-      <div className="center">
-        <h1>Connect Wallet</h1>
-        <p>Please connect your wallet to continue</p>
+      <div
+        className="center"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ height: 400 }}>
+          <img src={login} alt="" />
+        </div>
+        <h4>Please connect your wallet to continue</h4>
 
         <div>
           <button
+            style={{ marginTop: "2vh" }}
             className="btn btn--blue"
             onClick={() => {
               showConnectModal(true);
