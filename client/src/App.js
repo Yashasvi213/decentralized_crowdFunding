@@ -6,6 +6,7 @@ import ConnectModal from "./components/ConnectModal";
 import Navbar from "./components/Navbar";
 import Faucet from "./pages/Faucet";
 import Home from "./pages/Home";
+import FundCampaign from "./components/FundCampagin";
 
 function App() {
   const [wallet, setWallet] = useState();
@@ -39,6 +40,7 @@ function App() {
             <Faucet wallet={wallet} showConnectModal={showConnectModal} />
           }
         />
+        <Route path="/fund" element={<FundCampaign wallet={wallet} />} />
       </Routes>
     </div>
   );

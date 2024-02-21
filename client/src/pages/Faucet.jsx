@@ -23,8 +23,7 @@ const Faucet = ({ wallet, updateWallet, showConnectModal }) => {
 
     const initLogic = async () => {
       setLoading(true);
-      const logic = await getLogicDriver(logicId, wallet);
-      logicRef.current = logic;
+      logicRef.current = await getLogicDriver(logicId, wallet);
 
       const [
         { name },

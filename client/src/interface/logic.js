@@ -1,12 +1,13 @@
 import { VoyageProvider, Wallet, getLogicDriver } from "js-moi-sdk";
 
 const provider = new VoyageProvider("babylon");
-export const logicId = process.env.REACT_APP_LOGIC_ID;
+export const logicId =
+  "0x0800003228360f426c0c30a2135e79e01b322827b6acde62bbedbb2298c11712c48524";
 
 const constructBaseWallet = async () => {
   const wallet = new Wallet(provider);
   await wallet.fromMnemonic(
-    process.env.REACT_APP_BASE_MNEMONIC,
+    "prepare album circle stone immune chimney kiwi couple strategy found bitter exchange",
     "m/44'/6174'/7020'/0/0"
   );
   console.log(wallet.getAddress());

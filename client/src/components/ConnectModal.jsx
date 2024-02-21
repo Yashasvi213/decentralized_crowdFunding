@@ -45,7 +45,11 @@ const ConnectModal = ({ isModalOpen, updateWallet, showConnectModal }) => {
           style={{ border: "1px solid black" }}
           onChange={(e) => setMnemonic(e.target.value)}
         />
-        {error && <p style={{ color: "red", fontWeight: 700, textAlign: "center" }}>{error}</p>}
+        {error && (
+          <p style={{ color: "red", fontWeight: 700, textAlign: "center" }}>
+            {error}
+          </p>
+        )}
       </Modal>
     </>
   );
