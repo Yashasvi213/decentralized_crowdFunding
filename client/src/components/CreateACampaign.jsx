@@ -45,7 +45,6 @@ function Admin({ wallet, teas, Setteas }) {
         EndTime
       );
       console.log(campaign);
-      toastSuccess(`Your Campaign ID is ${campid}`);
     } catch (error) {
       toastError(`Please Connect Wallet`);
     }
