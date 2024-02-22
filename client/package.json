@@ -25,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "github": "git add . && git commit -m 'update' && git push origin main",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
