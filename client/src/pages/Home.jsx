@@ -11,8 +11,8 @@ function Home() {
   const navigate = useNavigate();
   return (
     <>
-    <Hero/>
-    {/* <div className=" w-[100vw] h-[40vh]">
+      <Hero />
+      {/* <div className=" w-[100vw] h-[40vh]">
     <div className= 'pl-10 flex w-[90%] justify-between'> 
     <div>
      <h1 className="text-[2.5em]">Create your own Campaign</h1>
@@ -36,8 +36,7 @@ function Home() {
     
     </div>    
    </div> */}
-   <WhyUS/>
-   <Services/>
+      <WhyUS />
     </>
   );
 }

@@ -36,11 +36,13 @@ export default function ExploreCard({
         <p class="text-sm font-normal text-gray-400">{description}</p>
         {/* fixed texxt visibility issue */}
         <p className="text-yellow-500">Target Amount: {targetAmount}</p>
-        <div class="flex items-center justify-between p-2  bg-green-300 rounded">
+        <div class="">
           <div class="flex items-start justify-between w-full">
             <p class="flex-grow w-full text-2xl text-gray-700">
-              <span class="font-light text-gray-400 text-md">$</span>
-              {currentAmount}
+              funded:
+              <span class="font-light text-green-400 text-md">
+                $ {currentAmount}
+              </span>
             </p>
           </div>
         </div>

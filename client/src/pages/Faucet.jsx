@@ -6,7 +6,6 @@ import { toastError, toastSuccess } from "../utils/toastWrapper";
 import Loader from "../components/Loader";
 import { calculateRemainingTime } from "../utils/CalculateTimer";
 import login from "../assets/login.jpg";
-import AboutFaucet from "../components/AboutFaucet";
 
 // Changes Made
 
@@ -54,22 +53,22 @@ const Faucet = ({
   const onClaimHandler = async () => {
     try {
       setClaiming(true);
-
+      console.log("Claiming tokens");
       await logic.ClaimToken(wallet);
       const { nextClaim } = await logic.GetNextClaim(wallet.getAddress());
-
+      console.log(nextClaim);
       setNextClaim(nextClaim);
       updateTokenBalance(tokenBalance + claimAmount);
       toastSuccess(`Claimed ${claimAmount} successfully`);
       setClaiming(false);
     } catch (error) {
+      console.log("Error claiming tokens", error);
       toastError(error.message);
       setClaiming(false);
     }
   };
 
   return wallet ? (
-  
     <div className="faucet">
       <Card classNames={"card"} type="primary" className=" ">
         <div className="">
@@ -135,11 +134,8 @@ const Faucet = ({
           </button>
         </div>
       </div>
-      <AboutFaucet/>
     </div>
-    );
-
- 
+  );
 };
 
 export default Faucet;
