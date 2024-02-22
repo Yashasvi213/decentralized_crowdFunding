@@ -33,7 +33,7 @@ const Navbar = ({
   }, [toggleValue]);
 
   return (
-    <nav className="navbar">
+    <nav style={{marginBottom:'0px'}} className="navbar sticky top-0 z-40 w-full backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-gray-100/20 dark:border-slate-100/[0.9] bg-white supports-backdrop-blur:bg-white/65 dark:bg-yellow-50/70">
       <div className="nav__header">
         <div
           onClick={handleToggle}
@@ -46,7 +46,7 @@ const Navbar = ({
           <div></div>
         </div>
         <Link className="navbar__logo" to={"/ "}>
-          <div>OFI</div>
+          <span className="p-3 text-center  border-orange-500/40 border-4 rounded-full hover:bg-orange-400/20 hover:border-sky-500/40 transition bg-sky-500/20">OFI</span>
         </Link>
       </div>
       <ul
@@ -56,6 +56,7 @@ const Navbar = ({
         }
       >
         <Link to={"/home"}>Home</Link>
+        <Link to={"/JoinCampaign"}>Campaigns</Link>
         <Link to={"/faucet"}>Claim Faucet</Link>
         <a
           href={"https://moi.technology"}

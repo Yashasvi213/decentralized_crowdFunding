@@ -4,11 +4,15 @@ import creatorAnimation from "../assets/creatorAnimation.json";
 import donateboxAnimation from "../assets/donateboxAnimation.json";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Hero from "../components/Hero";
+import WhyUS from "../components/WhyUS";
+import Services from "../components/Services";
 function Home() {
   const navigate = useNavigate();
   return (
     <>
-    <div className=" w-[100vw] h-[40vh]">
+    <Hero/>
+    {/* <div className=" w-[100vw] h-[40vh]">
     <div className= 'pl-10 flex w-[90%] justify-between'> 
     <div>
      <h1 className="text-[2.5em]">Create your own Campaign</h1>
@@ -31,7 +35,9 @@ function Home() {
       <Link className="self-center p-4 px-[4em] border-4 rounded-xl bg-orange-500" to={'/JoinCampaign'}>Explore Campaigns </Link>
     
     </div>    
-   </div>
+   </div> */}
+   <WhyUS/>
+   <Services/>
     </>
   );
 }
