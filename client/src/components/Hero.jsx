@@ -30,14 +30,14 @@ function Hero() {
 
             <div className="mt-8 flex flex-wrap gap-4 text-center">
               <Link
-                className="self-center p-4 px-[3em] border-4 rounded-xl hover:bg-sky-500 bg-orange-500"
+                className="self-center p-4 px-[3em] rounded-xl hover:bg-sky-500 bg-orange-500"
                 to={"/CreateCampaign"}
               >
                 Create Your Campaign !
               </Link>
 
               <Link
-                className="self-center p-4 px-[4em] border-4 rounded-xl transition bg-gray-200 hover:bg-sky-500"
+                className="self-center p-4 px-[4em] rounded-xl transition bg-gray-200 hover:bg-sky-500"
                 to={"/JoinCampaign"}
               >
                 Explore Campaigns{" "}

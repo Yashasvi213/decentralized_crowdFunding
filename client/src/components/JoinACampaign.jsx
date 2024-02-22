@@ -37,7 +37,7 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
     for (let i = 0; i < 4; i++) {
       loadingCards.push(
         <Card key={i} className="w-[20vw] h-[40vh] p-4 shadow-md">
-          <div className="animate-pulse flex flex-col justify-between h-full">
+          <div className="animate-pulse flex flex-col justify-between h-full flex-wrap">
             <div>
               <div className="h-4 bg-gray-300 rounded mb-2"></div>
               <div className="h-4 bg-gray-300 rounded mb-2"></div>
@@ -55,12 +55,15 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
   const navigate = useNavigate();
   return (
     <div className="w-[100vw] h-[80vh]">
-      {/* create campaign banner on top */}
       <div className="bg-blue-500 px-4 py-2 my-4 text-white">
         <p className="text-center text-xl mb-0 font-medium">
-          want to create your own campaign? 
-          <a href="/CreateCampaign" className="inline-block underline text-orange-500">
-            &nbsp;click here to get started!</a>
+          want to create your own campaign?
+          <a
+            href="/CreateCampaign"
+            className="inline-block underline text-orange-500"
+          >
+            &nbsp;click here to get started!
+          </a>
         </p>
       </div>
 
@@ -79,16 +82,19 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
 
         {!isLoading && !error && (
           <div className="flex  gap-4 flex-wrap justify-center mt-4">
-            {campaigns.map((campaign) => (
-              <ExploreCard key={campaign.id} {...campaign}>
-                <Button
-                  onClick={() => navigate(`/join/${campaign.id}`)}
-                  className="px-4 py-2 w-full text-center  border-2 rounded-md thisfknButton bg-black text-md mt-2"
-                >
-                  Join campaign
-                </Button>
-              </ExploreCard>
-            ))}
+            {campaigns
+              .slice()
+              .reverse()
+              .map((campaign) => (
+                <ExploreCard key={campaign.id} {...campaign}>
+                  <button
+                    onClick={() => navigate(`/join/${campaign.id}`)}
+                    className="px-4 py-2 w-full text-center  border-2 rounded-md thisfknButton  text-md mt-2 border-black border-r-4 border-b-4 "
+                  >
+                    Join campaign
+                  </button>
+                </ExploreCard>
+              ))}
           </div>
         )}
       </div>
