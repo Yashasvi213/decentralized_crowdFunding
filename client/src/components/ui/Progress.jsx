@@ -8,7 +8,7 @@ const Progress = ({ percent }) => {
           <div
             className={`bg-blue-500 absolute top-0 left-0 flex h-full w-[${percent}%] items-center justify-center rounded-2xl text-xs font-semibold text-white`}
           >
-            {percent}%
+            {!percent ? 0 : percent}%
           </div>
         </div>
       </div>

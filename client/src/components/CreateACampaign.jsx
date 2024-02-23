@@ -3,21 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import logic from "../interface/logic";
 import { toastError, toastSuccess } from "../utils/toastWrapper";
 
-const Input = ({ ...props }) => (
-  <input
-    {...props}
-    className={`${
-      props.className || ""
-    } w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150`}
-  />
-);
-
 function Admin({ wallet, teas, Setteas }) {
   let [name, setName] = useState("");
   let [discription, setDiscription] = useState("");
   let [creater, setCreater] = useState("");
-  let [EndTime, SetEndtime] = useState("");
-  let [amount, setAmount] = useState("");
+  let [EndTime, SetEndtime] = useState();
+  let [amount, setAmount] = useState();
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -53,6 +44,7 @@ function Admin({ wallet, teas, Setteas }) {
 
   const createcamp = async () => {
     try {
+      console.log(wallet, name, discription, amount, EndTime);
       const campaign = await logic.CreateCampaign(
         wallet,
         name,
@@ -70,52 +62,6 @@ function Admin({ wallet, teas, Setteas }) {
   };
 
   return (
-    // <div className=" w-[100vw] h-[80vh]">
-    //   <div className="pl-10">
-    //     <h1 className="text-[2.5em]">Create A Campaign</h1>
-    //     <div className="flex flex-col items-center  gap-2 w-[95%] h-[90%] border-2 rounded-md p-4 mt-2">
-    //     <img className="md:hidden" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fENhbXBhaWdufGVufDB8fDB8fHww" alt="Create A Campaign"/>
-    //       <input
-    //         type="text"
-    //         className="w-[50vw] border-3 rounded-md p-2"
-    //         placeholder="Title for campaign"
-    //         onChange={onNameChange}
-    //       />
-    //       <input
-    //         type="text"
-    //         className="w-[50vw] border-3 rounded-md p-2"
-    //         placeholder="Amount  in numbers"
-    //         onChange={onAmountChange}
-    //       />
-    //       <textarea
-    //         type="text"
-    //         className="w-[50vw] border-3 rounded-md p-2"
-    //         placeholder="Enter Story for campaign"
-    //         onChange={onDiscriptionChange}
-    //       />
-    //       <input
-    //         type="text"
-    //         className="w-[50vw] border-3 rounded-md p-2"
-    //         placeholder="Creater"
-    //         onChange={onCreaterChange}
-    //       />
-    //       <input
-    //         type="text"
-    //         className="w-[50vw] border-3 rounded-md p-2"
-    //         placeholder="EndTime in hours"
-    //         onChange={onEndTimeChange}
-    //       />
-    //       <button
-    //         className="border-2 w-[50vw] h-[5vh] rounded-lg bg-orange-600 thisfknButton text-white"
-    //         onClick={() => {
-    //           createcamp();
-    //         }}
-    //       >
-    //         Create Campaign !
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="pt-28 pb-12 max-w-screen-xl mx-auto px-4">
       <div className="custom-screen text-gray-600">
         <div className="max-w-lg mx-auto gap-12 justify-between lg:flex lg:max-w-none">
@@ -138,42 +84,35 @@ function Admin({ wallet, teas, Setteas }) {
             </p>
           </div>
           <div className="flex-1 mt-12 sm:max-w-lg lg:max-w-md lg:mt-0">
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="space-y-5 font-medium"
-            >
+            <div className="space-y-5 font-medium">
               <div>
                 <label>Full name</label>
-                <Input
-                  aria-label="Full name"
-                  type="text"
-                  required
-                  className="mt-2 focus:border-indigo-600"
-                  onClick={onNameChange}
+                <input
+                  className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
+                  onChange={onNameChange}
                 />
               </div>
               <div>
                 <label>Creator</label>
-                <Input
-                  required
-                  className="mt-2 focus:border-indigo-600"
-                  onClick={onCreaterChange}
+                <input
+                  className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
+                  onChange={onCreaterChange}
                 />
               </div>
               <div>
                 <label>End Time</label>
-                <Input
+                <input
                   required
-                  className="mt-2 focus:border-indigo-600"
-                  onClick={onEndTimeChange}
+                  className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
+                  onChange={onEndTimeChange}
                 />
               </div>
               <div>
                 <label>Amount</label>
-                <Input
+                <input
                   required
-                  className="mt-2 focus:border-indigo-600"
-                  onClick={onAmountChange}
+                  className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
+                  onChange={onAmountChange}
                 />
               </div>
               <div>
@@ -182,7 +121,7 @@ function Admin({ wallet, teas, Setteas }) {
                   aria-label="Message"
                   required
                   className="w-full mt-2 h-36 px-3 py-2 resize-none appearance-none bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                  onClick={onDiscriptionChange}
+                  onChange={onDiscriptionChange}
                 ></textarea>
                 {error && <p className="text-red-500">{error}</p>}
               </div>
@@ -197,7 +136,7 @@ function Admin({ wallet, teas, Setteas }) {
                   Submit
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

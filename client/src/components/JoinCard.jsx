@@ -161,7 +161,7 @@ const JoinCard = ({ wallet }) => {
                   required
                   className="mt-2 focus:border-indigo-600"
                   placholder="$"
-                  onClick={onAmountChange}
+                  onChange={onAmountChange}
                 />
               </div>
 
