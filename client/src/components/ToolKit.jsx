@@ -13,7 +13,7 @@ const ToolKit = () => {
       desc: "MOI is built on the best blockchain network in the world",
     },
     {
-      title: "MOI Nation",
+      title: "",
       desc: "Perform small but crucial tasks as a Citizen to spread awareness about MOI",
     },
     {
