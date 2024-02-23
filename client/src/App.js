@@ -59,10 +59,7 @@ function App() {
   };
 
   return (
-    <div
-      className="app"
-      style={{ height: "100vh", width: "100vw", backgroundColor: "#FBF9F0" }}
-    >
+    <div className="app ">
       <Navbar
         tokenDetails={tokenDetails}
         tokenBalance={tokenBalance}

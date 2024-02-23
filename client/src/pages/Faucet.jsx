@@ -7,8 +7,6 @@ import Loader from "../components/Loader";
 import { calculateRemainingTime } from "../utils/CalculateTimer";
 import login from "../assets/login.jpg";
 
-// Changes Made
-
 const Faucet = ({
   wallet,
   showConnectModal,
