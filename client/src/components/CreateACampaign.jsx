@@ -62,6 +62,8 @@ function Admin({ wallet, teas, Setteas }) {
       );
       console.log(campaign);
       toastSuccess(`Campaign Created ${campaign}`);
+      const { id } = campaign;
+      navigate(`./join/${id}`);
     } catch (error) {
       toastError(`Please Connect Wallet`);
     }
@@ -153,8 +155,6 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>Creator</label>
                 <Input
-                  aria-label="Email"
-                  type="email"
                   required
                   className="mt-2 focus:border-indigo-600"
                   onClick={onCreaterChange}
@@ -163,8 +163,6 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>End Time</label>
                 <Input
-                  aria-label="Email"
-                  type="email"
                   required
                   className="mt-2 focus:border-indigo-600"
                   onClick={onEndTimeChange}
@@ -173,8 +171,6 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>Amount</label>
                 <Input
-                  aria-label="Email"
-                  type="email"
                   required
                   className="mt-2 focus:border-indigo-600"
                   onClick={onAmountChange}
