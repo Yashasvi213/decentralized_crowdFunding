@@ -42,11 +42,16 @@ const JoinCard = ({ wallet }) => {
   }, [id]);
 
   const sendAsset = async () => {
-    // setIsLoading(true);
     try {
+      if (!wallet) {
+        return toastError("Please connect wallet");
+      }
+      if (!amount) {
+        return toastError("Please enter an amount");
+      }
+
       let data = await logic.FundCampaign(wallet, id, amount);
       console.log("Funds sent successfully!");
-      // Optionally, you can perform any additional actions after sending funds
     } catch (error) {
       console.error("Error sending funds:", error);
     }
