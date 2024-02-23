@@ -3,14 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logic from "../interface/logic";
 import ExploreCard from "./ui/ExploreCard";
-const Input = ({ ...props }) => (
-  <input
-    {...props}
-    className={`${
-      props.className || ""
-    } w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150`}
-  />
-);
+
 function truncateDescription(description, limit) {
   const words = description.split(" ");
   if (words.length > limit) {

@@ -156,8 +156,7 @@ const JoinCard = ({ wallet }) => {
               <div>
                 <label>Amount</label>
                 <Input
-                  aria-label="Email"
-                  type="email"
+                  type="number"
                   required
                   className="mt-2 focus:border-indigo-600"
                   placholder="$"

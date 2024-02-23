@@ -35,10 +35,8 @@ function Admin({ wallet, teas, Setteas }) {
     setCreater(e.target.value);
   };
   const onEndTimeChange = (e) => {
-    const milli = e.target.value * 60 * 60 * 1000;
-    const date = new Date(e.target.value).getTime();
+    const milli = e.target.value * 60 * 60 * 10000;
     console.log(milli);
-    //
     SetEndtime(milli);
   };
 
@@ -55,7 +53,7 @@ function Admin({ wallet, teas, Setteas }) {
       console.log(campaign);
       toastSuccess(`Campaign Created ${campaign}`);
       const { id } = campaign;
-      navigate(`./join/${id}`);
+      navigate(`/join/${id}`);
     } catch (error) {
       toastError(`Please Connect Wallet`);
     }
@@ -88,6 +86,8 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>Full name</label>
                 <input
+                  required
+                  type="text"
                   className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
                   onChange={onNameChange}
                 />
@@ -95,6 +95,8 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>Creator</label>
                 <input
+                  required
+                  type="text"
                   className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
                   onChange={onCreaterChange}
                 />
@@ -102,6 +104,7 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>End Time</label>
                 <input
+                  type="number"
                   required
                   className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
                   onChange={onEndTimeChange}
@@ -110,6 +113,7 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>Amount</label>
                 <input
+                  type="number"
                   required
                   className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border shadow-sm rounded-lg duration-150 mt-2 focus:border-indigo-600"
                   onChange={onAmountChange}
@@ -118,6 +122,7 @@ function Admin({ wallet, teas, Setteas }) {
               <div>
                 <label>Discription</label>
                 <textarea
+                  type="text"
                   aria-label="Message"
                   required
                   className="w-full mt-2 h-36 px-3 py-2 resize-none appearance-none bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
