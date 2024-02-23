@@ -20,8 +20,8 @@ function WhyUS() {
           />
         </svg>
       ),
-      title: "Best quality",
-      desc: "We care about the quality of the product. As a digital product development agency, we believe in beautiful software.",
+      title: "Reliable",
+      desc: "We are a reliable and trusted company with a proven track record of delivering with any downtime.",
     },
     {
       icon: (
@@ -40,7 +40,7 @@ function WhyUS() {
         </svg>
       ),
       title: "Modern technologies",
-      desc: "We use the modern and most flexible and secure technologies to build the best products on the internet.",
+      desc: "We used modern and most flexible and secure technologies to build the best product on the internet.",
     },
     {
       icon: (
@@ -60,7 +60,7 @@ function WhyUS() {
         </svg>
       ),
       title: "Advenced security",
-      desc: "At Software Security Solutions our mission is to raise the bar by making computer security more accessible.",
+      desc: "our mission is to raise the bar by making computer security more accessible.",
     },
   ];
 
