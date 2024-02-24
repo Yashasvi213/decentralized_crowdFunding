@@ -3,7 +3,7 @@ import { VoyageProvider, Wallet, getLogicDriver } from "js-moi-sdk";
 const provider = new VoyageProvider("babylon");
 // export const logicId = process.env.REACT_APP_LOGIC_ID;
 export const logicId =
-  "0x0800003228360f426c0c30a2135e79e01b322827b6acde62bbedbb2298c11712c48524";
+  "0x0800004cf601f6e32690f9bcbe976e0a661767fec015452129ecac6aa267c711d125ad";
 
 const constructBaseWallet = async () => {
   const wallet = new Wallet(provider);
