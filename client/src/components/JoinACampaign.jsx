@@ -16,6 +16,7 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
   const [campaigns, setCampaigns] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -51,6 +52,9 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
     }
     return loadingCards;
   };
+  const filteredCampaigns = campaigns.filter((campaign) =>
+    campaign.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   const navigate = useNavigate();
   return (
     <div className="w-[100vw] h-[80vh]">
@@ -67,7 +71,16 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
       </div>
 
       <div className="my-4 max-w-screen-xl mx-auto px-4">
-        <h1 className="text-[2.5em] ">All Campaigns!</h1>
+        <div className="flex justify-between">
+          <h1 className="text-[2.5em] ">All Campaigns!</h1>
+          <input
+            type="text"
+            placeholder="Search campaigns..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 mb-4"
+          />
+        </div>
 
         <div className="flex flex-wrap">
           {isLoading && (
@@ -83,7 +96,7 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
 
         {!isLoading && !error && (
           <div className="flex gap-4 flex-wrap justify-center mt-4 max-w-screen-xl mx-auto px-4">
-            {campaigns
+            {filteredCampaigns
               .slice()
               .reverse()
               .map((campaign) => (
