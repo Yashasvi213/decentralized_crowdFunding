@@ -67,9 +67,9 @@ function Admin({ wallet, teas, Setteas }) {
         EndTime
       );
       console.log(campaign.createdCampaign);
-      const { id } = campaign;
+      const { id } = campaign.createdCampaign;
       console.log(id);
-      toastSuccess(`Campaign Created ${campaign}`);
+      toastSuccess(`Campaign Created ${campaign.createdCampaign.name}`);
       navigate(`/join/${id}`);
       setLoading(false);
     } catch (error) {
