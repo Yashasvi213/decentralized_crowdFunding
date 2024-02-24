@@ -66,11 +66,14 @@ function Admin({ wallet, teas, Setteas }) {
         amount,
         EndTime
       );
-      console.log(campaign);
+      console.log(campaign.createdCampaign);
+      const { id } = campaign;
+      console.log(id);
       toastSuccess(`Campaign Created ${campaign}`);
+      navigate(`/join/${id}`);
       setLoading(false);
     } catch (error) {
-      toastError(`Please Connect Wallet`);
+      toastError(`something went wrong: ${error}`);
     }
   };
 
