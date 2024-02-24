@@ -264,10 +264,7 @@ header {
 .navbar__logo {
   font-size: 30px;
   font-family: "04b 30";
-  src: url("../public/fonts/04B_30_.woff2") format("woff2"),
-    url("../public/fonts/04B_30_.woff") format("woff");
-  font-weight: bolder;
-  color: black;
+  scale: 1.5;
   display: flex;
   align-items: center;
 }

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { truncateStr } from "../utils/truncateStr";
 import { Link } from "react-router-dom";
-import Lottie from "lottie-react";
-import teaAnimation from "../assets/teaAnimation.json";
+import OFI from "../assets/logos/OFI.png";
 
 const Navbar = ({
   updateWallet,
@@ -48,10 +47,8 @@ const Navbar = ({
           <div></div>
           <div></div>
         </div>
-        <Link className="navbar__logo" to={"/ "}>
-          <span className="p-3 text-center  border-orange-500/40 border-4 rounded-full hover:bg-orange-400/20 hover:border-sky-500/40 transition bg-sky-500/20">
-            OFI
-          </span>
+        <Link className="navbar__logo pl-4" to={"/ "}>
+          <img src={OFI}></img>
         </Link>
       </div>
       <ul
