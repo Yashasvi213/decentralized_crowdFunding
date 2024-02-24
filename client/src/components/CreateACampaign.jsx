@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logic from "../interface/logic";
 import { toastError, toastSuccess } from "../utils/toastWrapper";
-
+import CircularProgress from "@mui/material/CircularProgress";
 function Admin({ wallet, teas, Setteas }) {
   let [name, setName] = useState("");
   let [discription, setDiscription] = useState("");
@@ -10,6 +10,7 @@ function Admin({ wallet, teas, Setteas }) {
   let [EndTime, SetEndtime] = useState();
   let [amount, setAmount] = useState();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,7 +43,22 @@ function Admin({ wallet, teas, Setteas }) {
 
   const createcamp = async () => {
     try {
-      console.log(wallet, name, discription, amount, EndTime);
+      if (!name) {
+        return toastError("Please enter an name");
+      }
+      if (!amount) {
+        return toastError("Please enter an amount");
+      }
+      if (!EndTime) {
+        return toastError("Please enter an End Time");
+      }
+      if (!discription) {
+        return toastError("Please enter an discription");
+      }
+      if (!wallet) {
+        return toastError("Please connect wallet");
+      }
+      setLoading(true);
       const campaign = await logic.CreateCampaign(
         wallet,
         name,
@@ -52,8 +68,7 @@ function Admin({ wallet, teas, Setteas }) {
       );
       console.log(campaign);
       toastSuccess(`Campaign Created ${campaign}`);
-      const { id } = campaign;
-      navigate(`/join/${id}`);
+      setLoading(false);
     } catch (error) {
       toastError(`Please Connect Wallet`);
     }
@@ -133,12 +148,16 @@ function Admin({ wallet, teas, Setteas }) {
 
               <div className="pt-1">
                 <button
-                  className="w-full text-white bg-gray-800 hover:bg-gray-600 active:bg-gray-900 py-2.5 px-4 text-center rounded-lg duration-150"
+                  className="w-full text-white bg-gray-800 hover:bg-gray-600 active:bg-gray-900 py-2.5 px-4 text-center rounded-lg duration-150 "
                   onClick={() => {
                     createcamp();
                   }}
                 >
-                  Submit
+                  {loading ? (
+                    <CircularProgress size={"30px"} />
+                  ) : (
+                    "Create Campaign"
+                  )}
                 </button>
               </div>
             </div>

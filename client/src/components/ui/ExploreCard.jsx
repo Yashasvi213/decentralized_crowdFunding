@@ -19,7 +19,7 @@ export default function ExploreCard({
           <div className="flex justify-between">
             <div>
               <h1 class="text-base font-semibold">{name}</h1>
-              <p class="text-gray-500 text-md">{description}</p>
+              <p class="text-gray-500 text-md ">{description}</p>
             </div>
             <Avatar src="https://i.pinimg.com/564x/28/48/e9/2848e9b67d266928df3665e4cb1293d4.jpg" />
           </div>

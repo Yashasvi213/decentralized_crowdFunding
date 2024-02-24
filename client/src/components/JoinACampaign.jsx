@@ -28,7 +28,6 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
         setIsLoading(false);
       }
     };
-
     fetchCampaigns();
   }, []);
 
@@ -36,15 +35,15 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
     const loadingCards = [];
     for (let i = 0; i < 4; i++) {
       loadingCards.push(
-        <Card key={i} className="w-[20vw] h-[40vh] p-4 shadow-md">
+        <Card key={i} className=" h-[40vh] p-4 shadow-md">
           <div className="animate-pulse flex flex-col justify-between h-full flex-wrap">
             <div>
-              <div className="h-4 bg-gray-300 rounded mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 w-[300px]  bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 w-[300px] bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 w-[300px] bg-gray-300 rounded mb-2"></div>
             </div>
             <div>
-              <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              <div className="h-4 w-[300px] bg-gray-300 rounded mb-2"></div>
             </div>
           </div>
         </Card>
@@ -67,12 +66,14 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
         </p>
       </div>
 
-      <div className="my-4 pl-10">
-        <h1 className="text-[2.5em]">All Campaigns!</h1>
+      <div className="my-4 max-w-screen-xl mx-auto px-4">
+        <h1 className="text-[2.5em] ">All Campaigns!</h1>
 
-        {isLoading && (
-          <div className="flex gap-2 flex-wrap">{renderLoadingCards()}</div>
-        )}
+        <div className="flex flex-wrap">
+          {isLoading && (
+            <div className="flex gap-2 flex-wrap">{renderLoadingCards()}</div>
+          )}
+        </div>
 
         {error && (
           <div className="text-center text-red-500">
@@ -81,7 +82,7 @@ const JoinACampaign = ({ wallet, tokenBalance }) => {
         )}
 
         {!isLoading && !error && (
-          <div className="flex  gap-4 flex-wrap justify-center mt-4">
+          <div className="flex gap-4 flex-wrap justify-center mt-4 max-w-screen-xl mx-auto px-4">
             {campaigns
               .slice()
               .reverse()

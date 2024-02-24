@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import logic from "../interface/logic";
 import toast from "react-hot-toast";
 import { toastError, toastSuccess } from "../utils/toastWrapper";
-
+import CircularProgress from "@mui/material/CircularProgress";
 const Input = ({ ...props }) => (
   <input
     {...props}
@@ -16,7 +16,7 @@ const Input = ({ ...props }) => (
 const JoinCard = ({ wallet }) => {
   const [amount, setAmount] = useState("");
   const [campaign, setCampaign] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const params = useParams();
   const { joinid } = params;
   const id = parseInt(joinid);
@@ -49,10 +49,14 @@ const JoinCard = ({ wallet }) => {
       if (!amount) {
         return toastError("Please enter an amount");
       }
-
+      setLoading(true);
       let data = await logic.FundCampaign(wallet, id, amount);
       console.log("Funds sent successfully!");
+      setLoading(false);
+      toastSuccess("Funds sent successfully!");
     } catch (error) {
+      setLoading(false);
+      toastError("Error sending funds");
       console.error("Error sending funds:", error);
     }
   };
@@ -71,73 +75,6 @@ const JoinCard = ({ wallet }) => {
   }
 
   return (
-    // <div className="flex justify-center items-center h-[70vh] ">
-    //   <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[40vw]">
-    //     <div class="mb-4">
-    //       <label
-    //         class="block text-gray-700 text-sm font-bold mb-2"
-    //         for="username"
-    //       >
-    //         Contribute to the campaign
-    //       </label>
-
-    //       <div className="flex gap-2 items-center">
-    //         <label
-    //           class="block text-gray-700 text-sm font-bold "
-    //           for="username"
-    //         >
-    //           name
-    //         </label>
-    //         <h1 className="font-medium text-xl">{campaign.name}</h1>
-    //       </div>
-    //       <div className="flex gap-2 items-baseline mt-2">
-    //         <label
-    //           class="block text-gray-700 text-sm font-bold "
-    //           for="username"
-    //         >
-    //           description
-    //         </label>
-    //         <p class="appearance-none rounded text-gray-700 leading-tight">
-    //           {campaign.description}
-    //         </p>
-    //       </div>
-    //       <div>
-    //         <p className="text-gray-700 font-semibold">
-    //           Amount: {campaign.targetAmount}
-    //         </p>
-    //         <p className="text-gray-700 font-semibold">
-    //           funded: {campaign.currentAmount}
-    //         </p>
-    //       </div>
-    //     </div>
-    //     <div class="mb-6">
-    //       <label
-    //         class="block text-gray-700 text-sm font-bold mb-2"
-    //         for="password"
-    //       >
-    //         Enter the amount
-    //       </label>
-    //       <input
-    //         class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-    //         id="password"
-    //         onChange={onAmountChange}
-    //         placeholder="$"
-    //       />
-    //     </div>
-    //     <div class="flex items-center justify-between">
-    //       <button
-    //         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    //         type="button"
-    //         onClick={sendAsset}
-    //       >
-    //         Send Funds
-    //       </button>
-    //       <a class="inline-block align-baseline font-bold text-sm">
-    //         thanks for supporting
-    //       </a>
-    //     </div>
-    //   </form>
-    // </div>
     <div className="pt-28 pb-12 max-w-screen-xl mx-auto px-4">
       <div className="custom-screen text-gray-600">
         <div className="max-w-lg mx-auto  justify-between lg:flex lg:flex-col lg:max-w-none">
@@ -174,7 +111,7 @@ const JoinCard = ({ wallet }) => {
                   className="w-full text-white bg-gray-800 hover:bg-gray-600 active:bg-gray-900 py-2.5 px-4 text-center rounded-lg duration-150"
                   onClick={sendAsset}
                 >
-                  Submit
+                  {loading ? <CircularProgress size={"30px"} /> : "Submit"}
                 </button>
               </div>
             </form>
