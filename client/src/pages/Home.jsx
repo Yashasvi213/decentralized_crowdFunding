@@ -11,15 +11,11 @@ function Home() {
   return (
     <div className="text-[20px]">
       <GradientWarpper>
-        <motion.div animate={{}}>
-          <Hero />
-        </motion.div>
-      </GradientWarpper>
-      <WhyUS />
-      <FooterCTA />
-      <div>
+        <Hero />
+        <WhyUS />
+        <FooterCTA />
         <ToolKit />
-      </div>
+      </GradientWarpper>
     </div>
   );
 }

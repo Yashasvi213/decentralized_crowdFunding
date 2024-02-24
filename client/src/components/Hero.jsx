@@ -72,7 +72,7 @@ function Hero(props) {
               >
                 <Link
                   href="#cta"
-                  className="text-gray-700 border hover:bg-gray-50 py-2.5 px-4 text-center rounded-lg duration-150"
+                  className="text-gray-700 border-[2px] border-[31, 31, 31] hover:bg-gray-50 py-2.5 px-4 text-center rounded-lg duration-150"
                   to={"/JoinCampaign"}
                 >
                   Explore Campaigns
