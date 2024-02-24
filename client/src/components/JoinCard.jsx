@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import logic from "../interface/logic";
-import toast from "react-hot-toast";
 import { toastError, toastSuccess } from "../utils/toastWrapper";
 import CircularProgress from "@mui/material/CircularProgress";
 const Input = ({ ...props }) => (

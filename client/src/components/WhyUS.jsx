@@ -1,6 +1,6 @@
 import React from "react";
 import SectionWrapper from "./SectionWrapper";
-
+import { motion } from "framer-motion";
 function WhyUS() {
   const features = [
     {
@@ -72,7 +72,19 @@ function WhyUS() {
       >
         <ul className="grid gap-x-12 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((item, idx) => (
-            <li key={idx} className="space-y-3">
+            <motion.li
+              key={idx}
+              className="space-y-3"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+                transition: {
+                  delay: 1.3 + (idx + 1) * 0.3,
+                },
+              }}
+            >
               <div className="w-12 h-12 border text-indigo-600 rounded-full flex items-center justify-center">
                 {item.icon}
               </div>
@@ -80,7 +92,7 @@ function WhyUS() {
                 {item.title}
               </h4>
               <p>{item.desc}</p>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
