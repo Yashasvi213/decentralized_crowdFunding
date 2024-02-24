@@ -73,6 +73,7 @@ function Admin({ wallet, teas, Setteas }) {
       navigate(`/join/${id}`);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       toastError(`something went wrong: ${error}`);
     }
   };

@@ -1,9 +1,3 @@
-import wordpress from "../assets/icons/wordpress.svg";
-import nextjs from "../assets/icons/nextjs.svg";
-import tailwind from "../assets/icons/tailwind.svg";
-import nodejs from "../assets/icons/nodejs.svg";
-import vercel from "../assets/icons/vercel.svg";
-import figma from "../assets/icons/figma.svg";
 import SectionWrapper from "./SectionWrapper";
 
 const ToolKit = () => {
