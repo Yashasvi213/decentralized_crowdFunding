@@ -13,8 +13,8 @@ function Home() {
       <GradientWarpper>
         <Hero />
         <WhyUS />
-        <FooterCTA />
         <ToolKit />
+        <FooterCTA />
       </GradientWarpper>
     </div>
   );
