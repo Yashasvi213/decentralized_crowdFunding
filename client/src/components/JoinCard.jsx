@@ -30,6 +30,7 @@ const JoinCard = ({ wallet }) => {
       try {
         const { campaigns } = await logic.GetCampaigns();
         const foundCampaign = campaigns.find((campaign) => campaign.id === id);
+        console.log("foundCampaign", foundCampaign);
         setCampaign(foundCampaign);
         toastSuccess("Campaign fetched successfully");
       } catch (error) {
