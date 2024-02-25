@@ -67,43 +67,52 @@ const Faucet = ({
   };
 
   return wallet ? (
-    <div className="faucet">
-      <Card classNames={"card"} type="primary" className=" ">
-        <div className="">
-          <Skeleton loading={isLoading} active paragraph={{ rows: 7 }} />
-          {!isLoading && (
-            <>
-              <div className="">
-                <div className=""></div>
+    <div className="h-[85vh] flex justify-center items-center">
+      <div className="w-[40%] h-[80%] flex items-center ">
+        <Card classNames={"card"} type="primary" className="w-[100%]  border-2 shadow-lg p-8
+">
+          
+          <div className="   ">
+            
+            <Skeleton loading={isLoading} active paragraph={{ rows: 7 }} />
+            {!isLoading && (
+              <><div>
                 <div className="">
-                  <div className="">Available Limit</div>
-                  <h1>{refillTime === "00:00:00" ? claimAmount : 0} $</h1>
+                  <div className=""></div>
+                  <div className="">
+                    <h2 className="">Available Limit</h2>
+                    <h1>{refillTime === "00:00:00" ? claimAmount : 0} $</h1>
+                  </div>
                 </div>
-              </div>
-              <div className="">
-                {" "}
-                {error && <p className="">{error}</p>}
-                <button
-                  disabled={refillTime !== "00:00:00"}
-                  className="btn btn--blue"
-                  onClick={onClaimHandler}
-                >
-                  <span>Claim Tokens</span>
-                  <Loader loading={isClaiming} size={25} color="#fff" />
-                </button>
-                {isClaiming && (
-                  <p className="">
-                    Please wait while the current request is being processed
-                  </p>
-                )}
-                <div style={{ marginTop: "20px" }} className="">
-                  Refills in {refillTime}
+                <div className="">
+                  {" "}
+                  {error && <p className="">{error}</p>}
+                  <button
+                    disabled={refillTime !== "00:00:00"}
+                    className="btn btn--blue"
+                    onClick={onClaimHandler}
+                  >
+                    <span>Claim Tokens</span>
+                    <Loader loading={isClaiming} size={25} color="#fff" />
+                  </button>
+                  {isClaiming && (
+                    <p className="">
+                      Please wait while the current request is being processed
+                    </p>
+                  )}
+                  <div style={{ marginTop: "20px" }} className="">
+                    Refills in {refillTime}
+                  </div>
+                  <div>
+                    <p className="font-bold">Claim Tokens to Support the campaigns!</p>
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
-        </div>
-      </Card>
+                </div>
+              </>
+            )}
+          </div>
+        </Card>
+      </div>
     </div>
   ) : (
     <div className="connect-wallet">
