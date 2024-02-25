@@ -3,12 +3,13 @@ import React, { Children } from "react";
 import Avatar from "@mui/material/Avatar";
 import { Progress } from "antd";
 function truncateDescription(description, limit) {
-  const words = description.split(" ");
-  if (words.length > limit) {
-    return words.slice(0, limit).join(" ") + " ...";
+  const char = description.split("");
+  if (char.length > limit) {
+    return char.slice(0, limit).join("") + "...";
   }
   return description;
 }
+
 export default function ExploreCard({
   name,
   description,
