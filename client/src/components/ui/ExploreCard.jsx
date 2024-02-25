@@ -27,7 +27,7 @@ export default function ExploreCard({
             <div>
               <h1 class="text-base font-semibold">{truncateDescription(name, 15)}</h1>
               <p class="text-gray-500 text-md ">
-                {truncateDescription(description, 11)}
+                {truncateDescription(description, 20)}
               </p>
             </div>
             <Avatar src="https://i.pinimg.com/564x/28/48/e9/2848e9b67d266928df3665e4cb1293d4.jpg" />
