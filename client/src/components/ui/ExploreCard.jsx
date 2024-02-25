@@ -25,7 +25,7 @@ export default function ExploreCard({
         <div class="p-2 max-w-[300px] flex flex-col gap-2  rounded-lg ">
           <div className="flex justify-between">
             <div>
-              <h1 class="text-base font-semibold">{name}</h1>
+              <h1 class="text-base font-semibold">{truncateDescription(name, 15)}</h1>
               <p class="text-gray-500 text-md ">
                 {truncateDescription(description, 11)}
               </p>
