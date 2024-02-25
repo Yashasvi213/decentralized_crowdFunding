@@ -14,7 +14,7 @@ export default function ExploreCard({
   const percent = (currentAmount / targetAmount) * 100;
   return (
     <div>
-      <div className="bg-blue-50 p-2 rounded-md shadow-md min-w-[250px] max-w-[300px] border-[1px] border-black hover:bg-blue-100 transition-all ease-in-out">
+      <div className="bg-blue-50 p-2 rounded-md shadow-md w-[300px] border-[1px] border-black hover:bg-blue-100 transition-all ease-in-out">
         <div class="p-2 max-w-[300px] flex flex-col gap-2  rounded-lg ">
           <div className="flex justify-between">
             <div>
